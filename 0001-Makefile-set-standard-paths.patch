@@ -1,0 +1,36 @@
+From e2985f247e5181d6127b3770285b90850cd7f898 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Wed, 17 Jan 2018 15:50:24 -0800
+Subject: [PATCH] Makefile: set standard paths
+
+Signed-off-by: Brett T. Warden <brett.t.warden@intel.com>
+---
+ Makefile | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/Makefile b/Makefile
+index 1ab2905..f46c2b6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -1,13 +1,13 @@
+ all::
+ 
+ CGIT_VERSION = v1.1
+-CGIT_SCRIPT_NAME = cgit.cgi
+-CGIT_SCRIPT_PATH = /var/www/htdocs/cgit
+-CGIT_DATA_PATH = $(CGIT_SCRIPT_PATH)
++CGIT_SCRIPT_NAME = cgit
++CGIT_SCRIPT_PATH = /usr/share/httpd/www/cgi-bin
++CGIT_DATA_PATH = /usr/share/cgit
+ CGIT_CONFIG = /etc/cgitrc
+ CACHE_ROOT = /var/cache/cgit
+-prefix = /usr/local
+-libdir = $(prefix)/lib
++prefix = /usr
++libdir = $(prefix)/libexec
+ filterdir = $(libdir)/cgit/filters
+ docdir = $(prefix)/share/doc/cgit
+ htmldir = $(docdir)
+-- 
+2.15.1
+
