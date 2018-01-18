@@ -1,0 +1,25 @@
+From a2367c7c1a51ceb84787bc025ef25065570d6c41 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Thu, 18 Jan 2018 14:35:51 -0800
+Subject: [PATCH] cgit.conf: override standard paths
+
+---
+ cgit.conf | 6 ++++++
+ 1 file changed, 6 insertions(+)
+ create mode 100644 cgit.conf
+
+diff --git a/cgit.conf b/cgit.conf
+new file mode 100644
+index 0000000..3b3e9c6
+--- /dev/null
++++ b/cgit.conf
+@@ -0,0 +1,6 @@
++CGIT_SCRIPT_NAME = cgit
++CGIT_SCRIPT_PATH = /usr/share/httpd/www/cgi-bin
++CGIT_DATA_PATH = /usr/share/cgit
++prefix = /usr
++libdir = $(prefix)/libexec
++
+-- 
+2.15.1
+

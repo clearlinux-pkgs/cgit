@@ -4,20 +4,22 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 1
+Release  : 2
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
-Source1  : https://www.kernel.org/pub/software/scm/git/git-2.10.2.tar.gz
+Source1  : cgit.tmpfiles
+Source2  : https://www.kernel.org/pub/software/scm/git/git-2.10.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSL-1.0 GPL-2.0
+Requires: cgit-config
 Requires: cgit-bin
 Requires: cgit-data
 BuildRequires : go
 BuildRequires : openssl-dev
 BuildRequires : pkgconfig(zlib)
 BuildRequires : zlib-dev
-Patch1: 0001-Makefile-set-standard-paths.patch
+Patch1: 0001-cgit.conf-override-standard-paths.patch
 
 %description
 cgit - CGI for Git
@@ -29,9 +31,18 @@ built-in cache to decrease server I/O pressure.
 Summary: bin components for the cgit package.
 Group: Binaries
 Requires: cgit-data
+Requires: cgit-config
 
 %description bin
 bin components for the cgit package.
+
+
+%package config
+Summary: config components for the cgit package.
+Group: Default
+
+%description config
+config components for the cgit package.
 
 
 %package data
@@ -43,7 +54,7 @@ data components for the cgit package.
 
 
 %prep
-tar -xf %{SOURCE1}
+tar -xf %{SOURCE2}
 cd ..
 %setup -q -n cgit-1.1
 mkdir -p %{_topdir}/BUILD/cgit-1.1/git
@@ -55,13 +66,15 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1516294599
+export SOURCE_DATE_EPOCH=1516315433
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1516294599
+export SOURCE_DATE_EPOCH=1516315433
 rm -rf %{buildroot}
 %make_install
+mkdir -p %{buildroot}/usr/lib/tmpfiles.d
+install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 
 %files
 %defattr(-,root,root,-)
@@ -82,6 +95,10 @@ rm -rf %{buildroot}
 /usr/libexec/cgit/filters/simple-authentication.lua
 /usr/libexec/cgit/filters/syntax-highlighting.py
 /usr/libexec/cgit/filters/syntax-highlighting.sh
+
+%files config
+%defattr(-,root,root,-)
+/usr/lib/tmpfiles.d/cgit.conf
 
 %files data
 %defattr(-,root,root,-)
