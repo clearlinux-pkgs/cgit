@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 2
+Release  : 3
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -66,11 +66,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1516315433
+export SOURCE_DATE_EPOCH=1516641557
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1516315433
+export SOURCE_DATE_EPOCH=1516641557
 rm -rf %{buildroot}
 %make_install
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
@@ -81,6 +81,7 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 
 %files bin
 %defattr(-,root,root,-)
+/usr/libexec/cgit/cgi-bin/cgit
 /usr/libexec/cgit/filters/about-formatting.sh
 /usr/libexec/cgit/filters/commit-links.sh
 /usr/libexec/cgit/filters/email-gravatar.lua
@@ -106,4 +107,3 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/share/cgit/cgit.png
 /usr/share/cgit/favicon.ico
 /usr/share/cgit/robots.txt
-/usr/share/httpd/www/cgi-bin/cgit

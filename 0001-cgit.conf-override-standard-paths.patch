@@ -15,7 +15,7 @@ index 0000000..3b3e9c6
 +++ b/cgit.conf
 @@ -0,0 +1,6 @@
 +CGIT_SCRIPT_NAME = cgit
-+CGIT_SCRIPT_PATH = /usr/share/httpd/www/cgi-bin
++CGIT_SCRIPT_PATH = /usr/libexec/cgit/cgi-bin
 +CGIT_DATA_PATH = /usr/share/cgit
 +prefix = /usr
 +libdir = $(prefix)/libexec
