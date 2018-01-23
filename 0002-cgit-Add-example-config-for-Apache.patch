@@ -1,0 +1,90 @@
+From 2257bf885c11d1024c1e71c9bd46c9b644b1f663 Mon Sep 17 00:00:00 2001
+From: "Brett T. Warden" <brett.t.warden@intel.com>
+Date: Tue, 23 Jan 2018 09:51:27 -0800
+Subject: [PATCH] cgit: Add example config for Apache
+
+Adds example configuration for running cgit under the Apache HTTP
+server.
+
+Signed-off-by: Brett T. Warden <brett.t.warden@intel.com>
+---
+ Makefile                | 14 +++++++++++++-
+ httpd-cgit.conf.example | 16 ++++++++++++++++
+ 2 files changed, 29 insertions(+), 1 deletion(-)
+ create mode 100644 httpd-cgit.conf.example
+
+diff --git a/Makefile b/Makefile
+index 1ab2905..c8866c6 100644
+--- a/Makefile
++++ b/Makefile
+@@ -12,6 +12,7 @@ filterdir = $(libdir)/cgit/filters
+ docdir = $(prefix)/share/doc/cgit
+ htmldir = $(docdir)
+ pdfdir = $(docdir)
++exampledir = $(docdir)
+ mandir = $(prefix)/share/man
+ SHA1_HEADER = <openssl/sha.h>
+ GIT_VER = 2.10.2
+@@ -23,6 +24,7 @@ MAN_TXT  = $(MAN5_TXT)
+ DOC_MAN5 = $(patsubst %.txt,%,$(MAN5_TXT))
+ DOC_HTML = $(patsubst %.txt,%.html,$(MAN_TXT))
+ DOC_PDF  = $(patsubst %.txt,%.pdf,$(MAN_TXT))
++DOC_EXAMPLE = $(wildcard *.example)
+ 
+ # Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
+ # do not support the 'size specifiers' introduced by C99, namely ll, hh,
+@@ -101,6 +103,10 @@ install-pdf: doc-pdf
+ 	$(INSTALL) -m 0755 -d $(DESTDIR)$(pdfdir)
+ 	$(INSTALL) -m 0644 $(DOC_PDF) $(DESTDIR)$(pdfdir)
+ 
++install-example: doc-example
++	$(INSTALL) -m 0755 -d $(DESTDIR)$(exampledir)
++	$(INSTALL) -m 0644 $(DOC_EXAMPLE) $(DESTDIR)$(exampledir)
++
+ uninstall:
+ 	rm -f $(DESTDIR)$(CGIT_SCRIPT_PATH)/$(CGIT_SCRIPT_NAME)
+ 	rm -f $(DESTDIR)$(CGIT_DATA_PATH)/cgit.css
+@@ -124,11 +130,17 @@ uninstall-pdf:
+ 	    rm -fv $(DESTDIR)$(pdfdir)/$$i; \
+ 	done
+ 
+-doc: doc-man doc-html doc-pdf
++uninstall-example:
++	@for i in $(DOC_EXAMPLE); do \
++	    rm -fv $(DESTDIR)$(exampledir)/$$i; \
++	done
++
++doc: doc-man doc-html doc-pdf doc-example
+ doc-man: doc-man5
+ doc-man5: $(DOC_MAN5)
+ doc-html: $(DOC_HTML)
+ doc-pdf: $(DOC_PDF)
++doc-example: $(DOC_EXAMPLE)
+ 
+ %.5 : %.5.txt
+ 	a2x -f manpage $<
+diff --git a/httpd-cgit.conf.example b/httpd-cgit.conf.example
+new file mode 100644
+index 0000000..254d365
+--- /dev/null
++++ b/httpd-cgit.conf.example
+@@ -0,0 +1,16 @@
++# cgid module is required to run the cgit binary
++LoadModule cgid_module lib/httpd/modules/mod_cgid.so
++<IfModule cgid_module>
++	ScriptSock /var/run/cgid.sock
++</IfModule>
++
++# Path to cgit stylesheet, graphics
++Alias /cgit-data /usr/share/cgit
++
++# Path to cgit binary
++ScriptAlias /cgit /usr/libexec/cgit/cgi-bin/cgit
++<Directory "/usr/libexec/cgit/cgi-bin">
++    AllowOverride None
++    Options None
++    Require all granted
++</Directory>
+-- 
+2.15.1
+

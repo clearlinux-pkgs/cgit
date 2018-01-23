@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 4
+Release  : 5
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -26,6 +26,7 @@ BuildRequires : pkgconfig(zlib)
 BuildRequires : python
 BuildRequires : zlib-dev
 Patch1: 0001-cgit.conf-override-standard-paths.patch
+Patch2: 0002-cgit-Add-example-config-for-Apache.patch
 
 %description
 cgit - CGI for Git
@@ -74,19 +75,20 @@ cd ..
 mkdir -p %{_topdir}/BUILD/cgit-1.1/git
 mv %{_topdir}/BUILD/git-2.10.2/* %{_topdir}/BUILD/cgit-1.1/git
 %patch1 -p1
+%patch2 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1516727919
+export SOURCE_DATE_EPOCH=1516731907
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1516727919
+export SOURCE_DATE_EPOCH=1516731907
 rm -rf %{buildroot}
-%make_install install-man
+%make_install install-man install-example
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 
@@ -126,4 +128,5 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 
 %files doc
 %defattr(-,root,root,-)
+%doc /usr/share/doc/cgit/*
 %doc /usr/share/man/man5/*
