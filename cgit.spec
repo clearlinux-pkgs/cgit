@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 3
+Release  : 4
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -15,9 +15,15 @@ License  : Apache-2.0 BSD-2-Clause BSL-1.0 GPL-2.0
 Requires: cgit-config
 Requires: cgit-bin
 Requires: cgit-data
+Requires: cgit-doc
+BuildRequires : asciidoc
+BuildRequires : docbook-xml
 BuildRequires : go
+BuildRequires : libxml2
+BuildRequires : libxslt
 BuildRequires : openssl-dev
 BuildRequires : pkgconfig(zlib)
+BuildRequires : python
 BuildRequires : zlib-dev
 Patch1: 0001-cgit.conf-override-standard-paths.patch
 
@@ -53,6 +59,14 @@ Group: Data
 data components for the cgit package.
 
 
+%package doc
+Summary: doc components for the cgit package.
+Group: Documentation
+
+%description doc
+doc components for the cgit package.
+
+
 %prep
 tar -xf %{SOURCE2}
 cd ..
@@ -66,13 +80,13 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1516641557
+export SOURCE_DATE_EPOCH=1516727919
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1516641557
+export SOURCE_DATE_EPOCH=1516727919
 rm -rf %{buildroot}
-%make_install
+%make_install install-man
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 
@@ -86,6 +100,7 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/libexec/cgit/filters/commit-links.sh
 /usr/libexec/cgit/filters/email-gravatar.lua
 /usr/libexec/cgit/filters/email-gravatar.py
+/usr/libexec/cgit/filters/email-gravatar.pyc
 /usr/libexec/cgit/filters/email-libravatar.lua
 /usr/libexec/cgit/filters/gentoo-ldap-authentication.lua
 /usr/libexec/cgit/filters/html-converters/man2html
@@ -95,6 +110,7 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/libexec/cgit/filters/owner-example.lua
 /usr/libexec/cgit/filters/simple-authentication.lua
 /usr/libexec/cgit/filters/syntax-highlighting.py
+/usr/libexec/cgit/filters/syntax-highlighting.pyc
 /usr/libexec/cgit/filters/syntax-highlighting.sh
 
 %files config
@@ -107,3 +123,7 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/share/cgit/cgit.png
 /usr/share/cgit/favicon.ico
 /usr/share/cgit/robots.txt
+
+%files doc
+%defattr(-,root,root,-)
+%doc /usr/share/man/man5/*
