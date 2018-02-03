@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 6
+Release  : 7
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -82,11 +82,11 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1516731907
+export SOURCE_DATE_EPOCH=1517701274
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1516731907
+export SOURCE_DATE_EPOCH=1517701274
 rm -rf %{buildroot}
 %make_install install-man install-example
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
@@ -98,11 +98,12 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 %files bin
 %defattr(-,root,root,-)
 /usr/libexec/cgit/cgi-bin/cgit
+/usr/libexec/cgit/filters/__pycache__/email-gravatar.cpython-36.pyc
+/usr/libexec/cgit/filters/__pycache__/syntax-highlighting.cpython-36.pyc
 /usr/libexec/cgit/filters/about-formatting.sh
 /usr/libexec/cgit/filters/commit-links.sh
 /usr/libexec/cgit/filters/email-gravatar.lua
 /usr/libexec/cgit/filters/email-gravatar.py
-/usr/libexec/cgit/filters/email-gravatar.pyc
 /usr/libexec/cgit/filters/email-libravatar.lua
 /usr/libexec/cgit/filters/gentoo-ldap-authentication.lua
 /usr/libexec/cgit/filters/html-converters/man2html
@@ -112,7 +113,6 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/libexec/cgit/filters/owner-example.lua
 /usr/libexec/cgit/filters/simple-authentication.lua
 /usr/libexec/cgit/filters/syntax-highlighting.py
-/usr/libexec/cgit/filters/syntax-highlighting.pyc
 /usr/libexec/cgit/filters/syntax-highlighting.sh
 
 %files config
