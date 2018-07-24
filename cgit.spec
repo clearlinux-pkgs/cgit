@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 8
+Release  : 9
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -15,10 +15,12 @@ License  : Apache-2.0 BSD-2-Clause BSL-1.0 GPL-2.0
 Requires: cgit-config
 Requires: cgit-bin
 Requires: cgit-data
-Requires: cgit-doc
+Requires: cgit-license
+Requires: cgit-man
 BuildRequires : asciidoc
+BuildRequires : buildreq-cpan
+BuildRequires : buildreq-golang
 BuildRequires : docbook-xml
-BuildRequires : go
 BuildRequires : libxml2
 BuildRequires : libxslt
 BuildRequires : openssl-dev
@@ -39,6 +41,8 @@ Summary: bin components for the cgit package.
 Group: Binaries
 Requires: cgit-data
 Requires: cgit-config
+Requires: cgit-license
+Requires: cgit-man
 
 %description bin
 bin components for the cgit package.
@@ -63,16 +67,33 @@ data components for the cgit package.
 %package doc
 Summary: doc components for the cgit package.
 Group: Documentation
+Requires: cgit-man
 
 %description doc
 doc components for the cgit package.
 
 
+%package license
+Summary: license components for the cgit package.
+Group: Default
+
+%description license
+license components for the cgit package.
+
+
+%package man
+Summary: man components for the cgit package.
+Group: Default
+
+%description man
+man components for the cgit package.
+
+
 %prep
-tar -xf %{SOURCE2}
-cd ..
 %setup -q -n cgit-1.1
-mkdir -p %{_topdir}/BUILD/cgit-1.1/git
+cd ..
+%setup -q -T -D -n cgit-1.1 -b 2
+mkdir -p git
 mv %{_topdir}/BUILD/git-2.10.2/* %{_topdir}/BUILD/cgit-1.1/git
 %patch1 -p1
 %patch2 -p1
@@ -82,12 +103,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1517701274
+export SOURCE_DATE_EPOCH=1532467024
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1517701274
+export SOURCE_DATE_EPOCH=1532467024
 rm -rf %{buildroot}
+mkdir -p %{buildroot}/usr/share/doc/cgit
+cp COPYING %{buildroot}/usr/share/doc/cgit/COPYING
+cp git/COPYING %{buildroot}/usr/share/doc/cgit/git_COPYING
+cp git/compat/nedmalloc/License.txt %{buildroot}/usr/share/doc/cgit/git_compat_nedmalloc_License.txt
+cp git/contrib/persistent-https/LICENSE %{buildroot}/usr/share/doc/cgit/git_contrib_persistent-https_LICENSE
+cp git/contrib/subtree/COPYING %{buildroot}/usr/share/doc/cgit/git_contrib_subtree_COPYING
+cp git/t/diff-lib/COPYING %{buildroot}/usr/share/doc/cgit/git_t_diff-lib_COPYING
+cp git/vcs-svn/LICENSE %{buildroot}/usr/share/doc/cgit/git_vcs-svn_LICENSE
 %make_install install-man install-example
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
@@ -98,8 +127,6 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 %files bin
 %defattr(-,root,root,-)
 /usr/libexec/cgit/cgi-bin/cgit
-/usr/libexec/cgit/filters/__pycache__/email-gravatar.cpython-36.pyc
-/usr/libexec/cgit/filters/__pycache__/syntax-highlighting.cpython-36.pyc
 /usr/libexec/cgit/filters/about-formatting.sh
 /usr/libexec/cgit/filters/commit-links.sh
 /usr/libexec/cgit/filters/email-gravatar.lua
@@ -127,6 +154,18 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/share/cgit/robots.txt
 
 %files doc
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 %doc /usr/share/doc/cgit/*
-%doc /usr/share/man/man5/*
+
+%files license
+%defattr(-,root,root,-)
+/usr/share/doc/cgit/COPYING
+/usr/share/doc/cgit/git_COPYING
+/usr/share/doc/cgit/git_contrib_persistent-https_LICENSE
+/usr/share/doc/cgit/git_contrib_subtree_COPYING
+/usr/share/doc/cgit/git_t_diff-lib_COPYING
+/usr/share/doc/cgit/git_vcs-svn_LICENSE
+
+%files man
+%defattr(-,root,root,-)
+/usr/share/man/man5/cgitrc.5
