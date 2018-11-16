@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 9
+Release  : 10
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -12,11 +12,11 @@ Source2  : https://www.kernel.org/pub/software/scm/git/git-2.10.2.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSL-1.0 GPL-2.0
-Requires: cgit-config
-Requires: cgit-bin
-Requires: cgit-data
-Requires: cgit-license
-Requires: cgit-man
+Requires: cgit-config = %{version}-%{release}
+Requires: cgit-data = %{version}-%{release}
+Requires: cgit-libexec = %{version}-%{release}
+Requires: cgit-license = %{version}-%{release}
+Requires: cgit-man = %{version}-%{release}
 BuildRequires : asciidoc
 BuildRequires : buildreq-cpan
 BuildRequires : buildreq-golang
@@ -35,18 +35,6 @@ cgit - CGI for Git
 ==================
 This is an attempt to create a fast web interface for the Git SCM, using a
 built-in cache to decrease server I/O pressure.
-
-%package bin
-Summary: bin components for the cgit package.
-Group: Binaries
-Requires: cgit-data
-Requires: cgit-config
-Requires: cgit-license
-Requires: cgit-man
-
-%description bin
-bin components for the cgit package.
-
 
 %package config
 Summary: config components for the cgit package.
@@ -67,10 +55,20 @@ data components for the cgit package.
 %package doc
 Summary: doc components for the cgit package.
 Group: Documentation
-Requires: cgit-man
+Requires: cgit-man = %{version}-%{release}
 
 %description doc
 doc components for the cgit package.
+
+
+%package libexec
+Summary: libexec components for the cgit package.
+Group: Default
+Requires: cgit-config = %{version}-%{release}
+Requires: cgit-license = %{version}-%{release}
+
+%description libexec
+libexec components for the cgit package.
 
 
 %package license
@@ -103,20 +101,20 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1532467024
+export SOURCE_DATE_EPOCH=1542390976
 make  %{?_smp_mflags}
 
 %install
-export SOURCE_DATE_EPOCH=1532467024
+export SOURCE_DATE_EPOCH=1542390976
 rm -rf %{buildroot}
-mkdir -p %{buildroot}/usr/share/doc/cgit
-cp COPYING %{buildroot}/usr/share/doc/cgit/COPYING
-cp git/COPYING %{buildroot}/usr/share/doc/cgit/git_COPYING
-cp git/compat/nedmalloc/License.txt %{buildroot}/usr/share/doc/cgit/git_compat_nedmalloc_License.txt
-cp git/contrib/persistent-https/LICENSE %{buildroot}/usr/share/doc/cgit/git_contrib_persistent-https_LICENSE
-cp git/contrib/subtree/COPYING %{buildroot}/usr/share/doc/cgit/git_contrib_subtree_COPYING
-cp git/t/diff-lib/COPYING %{buildroot}/usr/share/doc/cgit/git_t_diff-lib_COPYING
-cp git/vcs-svn/LICENSE %{buildroot}/usr/share/doc/cgit/git_vcs-svn_LICENSE
+mkdir -p %{buildroot}/usr/share/package-licenses/cgit
+cp COPYING %{buildroot}/usr/share/package-licenses/cgit/COPYING
+cp git/COPYING %{buildroot}/usr/share/package-licenses/cgit/git_COPYING
+cp git/compat/nedmalloc/License.txt %{buildroot}/usr/share/package-licenses/cgit/git_compat_nedmalloc_License.txt
+cp git/contrib/persistent-https/LICENSE %{buildroot}/usr/share/package-licenses/cgit/git_contrib_persistent-https_LICENSE
+cp git/contrib/subtree/COPYING %{buildroot}/usr/share/package-licenses/cgit/git_contrib_subtree_COPYING
+cp git/t/diff-lib/COPYING %{buildroot}/usr/share/package-licenses/cgit/git_t_diff-lib_COPYING
+cp git/vcs-svn/LICENSE %{buildroot}/usr/share/package-licenses/cgit/git_vcs-svn_LICENSE
 %make_install install-man install-example
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
@@ -124,7 +122,22 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 %files
 %defattr(-,root,root,-)
 
-%files bin
+%files config
+%defattr(-,root,root,-)
+/usr/lib/tmpfiles.d/cgit.conf
+
+%files data
+%defattr(-,root,root,-)
+/usr/share/cgit/cgit.css
+/usr/share/cgit/cgit.png
+/usr/share/cgit/favicon.ico
+/usr/share/cgit/robots.txt
+
+%files doc
+%defattr(0644,root,root,0755)
+%doc /usr/share/doc/cgit/*
+
+%files libexec
 %defattr(-,root,root,-)
 /usr/libexec/cgit/cgi-bin/cgit
 /usr/libexec/cgit/filters/about-formatting.sh
@@ -142,30 +155,16 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 /usr/libexec/cgit/filters/syntax-highlighting.py
 /usr/libexec/cgit/filters/syntax-highlighting.sh
 
-%files config
-%defattr(-,root,root,-)
-/usr/lib/tmpfiles.d/cgit.conf
-
-%files data
-%defattr(-,root,root,-)
-/usr/share/cgit/cgit.css
-/usr/share/cgit/cgit.png
-/usr/share/cgit/favicon.ico
-/usr/share/cgit/robots.txt
-
-%files doc
-%defattr(0644,root,root,0755)
-%doc /usr/share/doc/cgit/*
-
 %files license
-%defattr(-,root,root,-)
-/usr/share/doc/cgit/COPYING
-/usr/share/doc/cgit/git_COPYING
-/usr/share/doc/cgit/git_contrib_persistent-https_LICENSE
-/usr/share/doc/cgit/git_contrib_subtree_COPYING
-/usr/share/doc/cgit/git_t_diff-lib_COPYING
-/usr/share/doc/cgit/git_vcs-svn_LICENSE
+%defattr(0644,root,root,0755)
+/usr/share/package-licenses/cgit/COPYING
+/usr/share/package-licenses/cgit/git_COPYING
+/usr/share/package-licenses/cgit/git_compat_nedmalloc_License.txt
+/usr/share/package-licenses/cgit/git_contrib_persistent-https_LICENSE
+/usr/share/package-licenses/cgit/git_contrib_subtree_COPYING
+/usr/share/package-licenses/cgit/git_t_diff-lib_COPYING
+/usr/share/package-licenses/cgit/git_vcs-svn_LICENSE
 
 %files man
-%defattr(-,root,root,-)
+%defattr(0644,root,root,0755)
 /usr/share/man/man5/cgitrc.5
