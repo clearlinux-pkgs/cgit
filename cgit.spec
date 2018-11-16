@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 10
+Release  : 11
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
