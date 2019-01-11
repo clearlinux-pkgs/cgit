@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 11
+Release  : 12
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -17,6 +17,7 @@ Requires: cgit-data = %{version}-%{release}
 Requires: cgit-libexec = %{version}-%{release}
 Requires: cgit-license = %{version}-%{release}
 Requires: cgit-man = %{version}-%{release}
+Requires: Pygments
 BuildRequires : asciidoc
 BuildRequires : buildreq-cpan
 BuildRequires : buildreq-golang
@@ -92,7 +93,7 @@ man components for the cgit package.
 cd ..
 %setup -q -T -D -n cgit-1.1 -b 2
 mkdir -p git
-mv %{_topdir}/BUILD/git-2.10.2/* %{_topdir}/BUILD/cgit-1.1/git
+cp -r %{_topdir}/BUILD/git-2.10.2/* %{_topdir}/BUILD/cgit-1.1/git
 %patch1 -p1
 %patch2 -p1
 
@@ -101,11 +102,12 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1542390976
+export SOURCE_DATE_EPOCH=1547174229
 make  %{?_smp_mflags}
 
+
 %install
-export SOURCE_DATE_EPOCH=1542390976
+export SOURCE_DATE_EPOCH=1547174229
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp COPYING %{buildroot}/usr/share/package-licenses/cgit/COPYING
