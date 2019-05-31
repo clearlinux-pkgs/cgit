@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.1
-Release  : 13
+Release  : 14
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -18,6 +18,7 @@ Requires: cgit-libexec = %{version}-%{release}
 Requires: cgit-license = %{version}-%{release}
 Requires: cgit-man = %{version}-%{release}
 Requires: Pygments
+BuildRequires : Pygments
 BuildRequires : asciidoc
 BuildRequires : buildreq-cpan
 BuildRequires : buildreq-golang
@@ -30,6 +31,7 @@ BuildRequires : python
 BuildRequires : zlib-dev
 Patch1: 0001-cgit.conf-override-standard-paths.patch
 Patch2: 0002-cgit-Add-example-config-for-Apache.patch
+Patch3: cve-2018-14912.patch
 
 %description
 cgit - CGI for Git
@@ -96,18 +98,24 @@ mkdir -p git
 cp -r %{_topdir}/BUILD/git-2.10.2/* %{_topdir}/BUILD/cgit-1.1/git
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C
-export SOURCE_DATE_EPOCH=1547174229
+export SOURCE_DATE_EPOCH=1559285920
+export GCC_IGNORE_WERROR=1
+export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1547174229
+export SOURCE_DATE_EPOCH=1559285920
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp COPYING %{buildroot}/usr/share/package-licenses/cgit/COPYING
