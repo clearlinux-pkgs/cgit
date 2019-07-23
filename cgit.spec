@@ -4,11 +4,11 @@
 #
 Name     : cgit
 Version  : 1.2.1
-Release  : 16
+Release  : 17
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source1  : cgit.tmpfiles
-Source2  : https://www.kernel.org/pub/software/scm/git/git-2.18.0.tar.gz
+Source2  : https://www.kernel.org/pub/software/scm/git/git-2.18.1.tar.gz
 Summary  : No detailed summary available
 Group    : Development/Tools
 License  : Apache-2.0 BSD-2-Clause BSL-1.0 GPL-2.0 MIT
@@ -93,7 +93,7 @@ man components for the cgit package.
 cd ..
 %setup -q -T -D -n cgit-1.2.1 -b 2
 mkdir -p git
-cp -r %{_topdir}/BUILD/git-2.18.0/* %{_topdir}/BUILD/cgit-1.2.1/git
+cp -r %{_topdir}/BUILD/git-2.18.1/* %{_topdir}/BUILD/cgit-1.2.1/git
 %patch1 -p1
 %patch2 -p1
 
@@ -101,8 +101,8 @@ cp -r %{_topdir}/BUILD/git-2.18.0/* %{_topdir}/BUILD/cgit-1.2.1/git
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
-export LANG=C
-export SOURCE_DATE_EPOCH=1561489090
+export LANG=C.UTF-8
+export SOURCE_DATE_EPOCH=1563855377
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -112,7 +112,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1561489090
+export SOURCE_DATE_EPOCH=1563855377
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp COPYING %{buildroot}/usr/share/package-licenses/cgit/COPYING
