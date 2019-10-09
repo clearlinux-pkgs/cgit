@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.1
-Release  : 17
+Release  : 18
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -26,7 +26,7 @@ BuildRequires : libxml2
 BuildRequires : libxslt
 BuildRequires : openssl-dev
 BuildRequires : pkgconfig(zlib)
-BuildRequires : python
+BuildRequires : python3
 BuildRequires : zlib-dev
 Patch1: 0001-cgit.conf-override-standard-paths.patch
 Patch2: 0002-cgit-Add-example-config-for-Apache.patch
@@ -102,7 +102,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1563855377
+export SOURCE_DATE_EPOCH=1570644964
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -112,7 +112,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1563855377
+export SOURCE_DATE_EPOCH=1570644964
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp COPYING %{buildroot}/usr/share/package-licenses/cgit/COPYING
