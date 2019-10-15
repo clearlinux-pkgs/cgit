@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.1
-Release  : 18
+Release  : 19
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -22,6 +22,7 @@ BuildRequires : Pygments
 BuildRequires : asciidoc
 BuildRequires : buildreq-golang
 BuildRequires : docbook-xml
+BuildRequires : git
 BuildRequires : libxml2
 BuildRequires : libxslt
 BuildRequires : openssl-dev
@@ -102,7 +103,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1570644964
+export SOURCE_DATE_EPOCH=1571109575
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -112,17 +113,17 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1570644964
+export SOURCE_DATE_EPOCH=1571109575
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
-cp COPYING %{buildroot}/usr/share/package-licenses/cgit/COPYING
-cp git/COPYING %{buildroot}/usr/share/package-licenses/cgit/git_COPYING
-cp git/compat/nedmalloc/License.txt %{buildroot}/usr/share/package-licenses/cgit/git_compat_nedmalloc_License.txt
-cp git/contrib/persistent-https/LICENSE %{buildroot}/usr/share/package-licenses/cgit/git_contrib_persistent-https_LICENSE
-cp git/contrib/subtree/COPYING %{buildroot}/usr/share/package-licenses/cgit/git_contrib_subtree_COPYING
-cp git/sha1dc/LICENSE.txt %{buildroot}/usr/share/package-licenses/cgit/git_sha1dc_LICENSE.txt
-cp git/t/diff-lib/COPYING %{buildroot}/usr/share/package-licenses/cgit/git_t_diff-lib_COPYING
-cp git/vcs-svn/LICENSE %{buildroot}/usr/share/package-licenses/cgit/git_vcs-svn_LICENSE
+cp %{_builddir}/cgit-1.2.1/COPYING %{buildroot}/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c
+cp %{_builddir}/cgit-1.2.1/git/COPYING %{buildroot}/usr/share/package-licenses/cgit/3ee0019d4f4ea0a9d3f50800833f30dc14e2968e
+cp %{_builddir}/cgit-1.2.1/git/compat/nedmalloc/License.txt %{buildroot}/usr/share/package-licenses/cgit/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
+cp %{_builddir}/cgit-1.2.1/git/contrib/persistent-https/LICENSE %{buildroot}/usr/share/package-licenses/cgit/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+cp %{_builddir}/cgit-1.2.1/git/contrib/subtree/COPYING %{buildroot}/usr/share/package-licenses/cgit/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+cp %{_builddir}/cgit-1.2.1/git/sha1dc/LICENSE.txt %{buildroot}/usr/share/package-licenses/cgit/f0197ae0a546d825bcd59ba21034f36272080a4a
+cp %{_builddir}/cgit-1.2.1/git/t/diff-lib/COPYING %{buildroot}/usr/share/package-licenses/cgit/2444921d595953ac768e3fb0c8ed97e62a45dc38
+cp %{_builddir}/cgit-1.2.1/git/vcs-svn/LICENSE %{buildroot}/usr/share/package-licenses/cgit/ec020890133b6310f905870747933def81575be1
 %make_install install-man install-example
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
@@ -166,14 +167,14 @@ install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
 
 %files license
 %defattr(0644,root,root,0755)
-/usr/share/package-licenses/cgit/COPYING
-/usr/share/package-licenses/cgit/git_COPYING
-/usr/share/package-licenses/cgit/git_compat_nedmalloc_License.txt
-/usr/share/package-licenses/cgit/git_contrib_persistent-https_LICENSE
-/usr/share/package-licenses/cgit/git_contrib_subtree_COPYING
-/usr/share/package-licenses/cgit/git_sha1dc_LICENSE.txt
-/usr/share/package-licenses/cgit/git_t_diff-lib_COPYING
-/usr/share/package-licenses/cgit/git_vcs-svn_LICENSE
+/usr/share/package-licenses/cgit/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
+/usr/share/package-licenses/cgit/2444921d595953ac768e3fb0c8ed97e62a45dc38
+/usr/share/package-licenses/cgit/2b8b815229aa8a61e483fb4ba0588b8b6c491890
+/usr/share/package-licenses/cgit/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
+/usr/share/package-licenses/cgit/3ee0019d4f4ea0a9d3f50800833f30dc14e2968e
+/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c
+/usr/share/package-licenses/cgit/ec020890133b6310f905870747933def81575be1
+/usr/share/package-licenses/cgit/f0197ae0a546d825bcd59ba21034f36272080a4a
 
 %files man
 %defattr(0644,root,root,0755)
