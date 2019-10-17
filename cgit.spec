@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.1
-Release  : 19
+Release  : 20
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.1.tar.xz
 Source1  : cgit.tmpfiles
@@ -31,6 +31,7 @@ BuildRequires : python3
 BuildRequires : zlib-dev
 Patch1: 0001-cgit.conf-override-standard-paths.patch
 Patch2: 0002-cgit-Add-example-config-for-Apache.patch
+Patch3: CVE-2018-19486.patch
 
 %description
 cgit - CGI for Git
@@ -97,13 +98,14 @@ mkdir -p git
 cp -r %{_topdir}/BUILD/git-2.18.1/* %{_topdir}/BUILD/cgit-1.2.1/git
 %patch1 -p1
 %patch2 -p1
+%patch3 -p1
 
 %build
 export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1571109575
+export SOURCE_DATE_EPOCH=1571277249
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
@@ -113,7 +115,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1571109575
+export SOURCE_DATE_EPOCH=1571277249
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp %{_builddir}/cgit-1.2.1/COPYING %{buildroot}/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c
