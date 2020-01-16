@@ -24,16 +24,16 @@ index 1ab2905..c8866c6 100644
 +exampledir = $(docdir)
  mandir = $(prefix)/share/man
  SHA1_HEADER = <openssl/sha.h>
- GIT_VER = 2.10.2
+ GIT_VER = 2.25.0
 @@ -23,6 +24,7 @@ MAN_TXT  = $(MAN5_TXT)
  DOC_MAN5 = $(patsubst %.txt,%,$(MAN5_TXT))
  DOC_HTML = $(patsubst %.txt,%.html,$(MAN_TXT))
  DOC_PDF  = $(patsubst %.txt,%.pdf,$(MAN_TXT))
 +DOC_EXAMPLE = $(wildcard *.example)
  
- # Define NO_C99_FORMAT if your formatted IO functions (printf/scanf et.al.)
- # do not support the 'size specifiers' introduced by C99, namely ll, hh,
-@@ -101,6 +103,10 @@ install-pdf: doc-pdf
+ ASCIIDOC = asciidoc
+ ASCIIDOC_EXTRA =
+@@ -107,6 +109,10 @@ install-pdf: doc-pdf
  	$(INSTALL) -m 0755 -d $(DESTDIR)$(pdfdir)
  	$(INSTALL) -m 0644 $(DOC_PDF) $(DESTDIR)$(pdfdir)
  
@@ -44,7 +44,7 @@ index 1ab2905..c8866c6 100644
  uninstall:
  	rm -f $(DESTDIR)$(CGIT_SCRIPT_PATH)/$(CGIT_SCRIPT_NAME)
  	rm -f $(DESTDIR)$(CGIT_DATA_PATH)/cgit.css
-@@ -124,11 +130,17 @@ uninstall-pdf:
+@@ -130,11 +136,17 @@ uninstall-pdf:
  	    rm -fv $(DESTDIR)$(pdfdir)/$$i; \
  	done
  
