@@ -24,7 +24,7 @@ index 1ab2905..c8866c6 100644
 +exampledir = $(docdir)
  mandir = $(prefix)/share/man
  SHA1_HEADER = <openssl/sha.h>
- GIT_VER = 2.25.0
+ GIT_VER = 2.25.1
 @@ -23,6 +24,7 @@ MAN_TXT  = $(MAN5_TXT)
  DOC_MAN5 = $(patsubst %.txt,%,$(MAN5_TXT))
  DOC_HTML = $(patsubst %.txt,%.html,$(MAN_TXT))
