@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.3
-Release  : 26
+Release  : 27
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source1  : cgit.tmpfiles
@@ -109,17 +109,17 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1584651751
+export SOURCE_DATE_EPOCH=1619059934
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FCFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
-export FFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
+export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -mzero-caller-saved-regs=used "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1584651751
+export SOURCE_DATE_EPOCH=1619059934
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp %{_builddir}/cgit-1.2.3/COPYING %{buildroot}/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c
