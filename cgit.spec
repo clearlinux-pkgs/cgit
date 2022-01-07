@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.3
-Release  : 28
+Release  : 29
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source1  : cgit.tmpfiles
@@ -17,17 +17,13 @@ Requires: cgit-data = %{version}-%{release}
 Requires: cgit-libexec = %{version}-%{release}
 Requires: cgit-license = %{version}-%{release}
 Requires: cgit-man = %{version}-%{release}
-Requires: Markdown
-Requires: Pygments
-Requires: docutils
 Requires: groff
-BuildRequires : Markdown
-BuildRequires : Pygments
+Requires: pypi-docutils
+Requires: pypi-markdown
+Requires: pypi-pygments
 BuildRequires : asciidoc
 BuildRequires : docbook-xml
-BuildRequires : docutils
 BuildRequires : git
-BuildRequires : groff
 BuildRequires : libxml2
 BuildRequires : libxslt
 BuildRequires : openssl-dev
@@ -109,7 +105,7 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1619059934
+export SOURCE_DATE_EPOCH=1641527447
 export GCC_IGNORE_WERROR=1
 export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
 export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
@@ -119,7 +115,7 @@ make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1619059934
+export SOURCE_DATE_EPOCH=1641527447
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
 cp %{_builddir}/cgit-1.2.3/COPYING %{buildroot}/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c
