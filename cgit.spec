@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.3
-Release  : 30
+Release  : 31
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source1  : cgit.tmpfiles
@@ -105,27 +105,27 @@ export http_proxy=http://127.0.0.1:9/
 export https_proxy=http://127.0.0.1:9/
 export no_proxy=localhost,127.0.0.1,0.0.0.0
 export LANG=C.UTF-8
-export SOURCE_DATE_EPOCH=1641527447
+export SOURCE_DATE_EPOCH=1664889775
 export GCC_IGNORE_WERROR=1
-export CFLAGS="$CFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-export FCFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-export FFLAGS="$FFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
-export CXXFLAGS="$CXXFLAGS -fno-lto -fstack-protector-strong -fzero-call-used-regs=used "
+export CFLAGS="$CFLAGS -fno-lto "
+export FCFLAGS="$FFLAGS -fno-lto "
+export FFLAGS="$FFLAGS -fno-lto "
+export CXXFLAGS="$CXXFLAGS -fno-lto "
 make  %{?_smp_mflags}
 
 
 %install
-export SOURCE_DATE_EPOCH=1641527447
+export SOURCE_DATE_EPOCH=1664889775
 rm -rf %{buildroot}
 mkdir -p %{buildroot}/usr/share/package-licenses/cgit
-cp %{_builddir}/cgit-1.2.3/COPYING %{buildroot}/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c
-cp %{_builddir}/git-2.25.1/COPYING %{buildroot}/usr/share/package-licenses/cgit/3ee0019d4f4ea0a9d3f50800833f30dc14e2968e
-cp %{_builddir}/git-2.25.1/compat/nedmalloc/License.txt %{buildroot}/usr/share/package-licenses/cgit/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90
-cp %{_builddir}/git-2.25.1/contrib/persistent-https/LICENSE %{buildroot}/usr/share/package-licenses/cgit/2b8b815229aa8a61e483fb4ba0588b8b6c491890
-cp %{_builddir}/git-2.25.1/contrib/subtree/COPYING %{buildroot}/usr/share/package-licenses/cgit/06877624ea5c77efe3b7e39b0f909eda6e25a4ec
-cp %{_builddir}/git-2.25.1/sha1dc/LICENSE.txt %{buildroot}/usr/share/package-licenses/cgit/f0197ae0a546d825bcd59ba21034f36272080a4a
-cp %{_builddir}/git-2.25.1/t/diff-lib/COPYING %{buildroot}/usr/share/package-licenses/cgit/2444921d595953ac768e3fb0c8ed97e62a45dc38
-cp %{_builddir}/git-2.25.1/vcs-svn/LICENSE %{buildroot}/usr/share/package-licenses/cgit/ec020890133b6310f905870747933def81575be1
+cp %{_builddir}/cgit-%{version}/COPYING %{buildroot}/usr/share/package-licenses/cgit/4cc77b90af91e615a64ae04893fdffa7939db84c || :
+cp %{_builddir}/git-2.25.1/COPYING %{buildroot}/usr/share/package-licenses/cgit/3ee0019d4f4ea0a9d3f50800833f30dc14e2968e || :
+cp %{_builddir}/git-2.25.1/compat/nedmalloc/License.txt %{buildroot}/usr/share/package-licenses/cgit/3cba29011be2b9d59f6204d6fa0a386b1b2dbd90 || :
+cp %{_builddir}/git-2.25.1/contrib/persistent-https/LICENSE %{buildroot}/usr/share/package-licenses/cgit/2b8b815229aa8a61e483fb4ba0588b8b6c491890 || :
+cp %{_builddir}/git-2.25.1/contrib/subtree/COPYING %{buildroot}/usr/share/package-licenses/cgit/06877624ea5c77efe3b7e39b0f909eda6e25a4ec || :
+cp %{_builddir}/git-2.25.1/sha1dc/LICENSE.txt %{buildroot}/usr/share/package-licenses/cgit/f0197ae0a546d825bcd59ba21034f36272080a4a || :
+cp %{_builddir}/git-2.25.1/t/diff-lib/COPYING %{buildroot}/usr/share/package-licenses/cgit/2444921d595953ac768e3fb0c8ed97e62a45dc38 || :
+cp %{_builddir}/git-2.25.1/vcs-svn/LICENSE %{buildroot}/usr/share/package-licenses/cgit/ec020890133b6310f905870747933def81575be1 || :
 %make_install install-man install-example
 mkdir -p %{buildroot}/usr/lib/tmpfiles.d
 install -m 0644 %{SOURCE1} %{buildroot}/usr/lib/tmpfiles.d/cgit.conf
