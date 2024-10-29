@@ -4,7 +4,7 @@
 #
 Name     : cgit
 Version  : 1.2.3
-Release  : 31
+Release  : 32
 URL      : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source0  : https://git.zx2c4.com/cgit/snapshot/cgit-1.2.3.tar.xz
 Source1  : cgit.tmpfiles
